@@ -12,7 +12,78 @@
       <h1>SEG - Sistema Estatal de Control Escolar</h1>
     </header>
     <main>
-      <p></p>
+      <div class="container">
+        <div class="instructions">
+          <p>Bienvenido al Sistema Estatal de Control Escolar</p>
+          <p id="school-stage">
+            En este módulo deberá capturar los datos de los maestros de su
+            escuela. Para empezar digite la clave de la escuela y pulse
+            continuar
+          </p>
+          <form class="school">
+            <label for="cct"
+              >Clave de Centro de Trabajo
+              <input type="text" name="cct" id="cct" class="text-input" />
+            </label>
+            <button>Continuar</button>
+          </form>
+          <form class="teachers hidden">
+            <div class="input-field">
+              <label for="rfc"
+                >R.F.C.
+                <input type="text" name="rfc" id="rfc" class="text-input" />
+              </label>
+            </div>
+            <div class="input-field">
+              <label for="paterno"
+                >Apellido Paterno
+                <input
+                  type="text"
+                  name="paterno"
+                  id="paterno"
+                  class="text-input"
+                />
+              </label>
+            </div>
+            <div class="input-field">
+              <label for="materno"
+                >Apellido Materno
+                <input
+                  type="text"
+                  name="materno"
+                  id="materno"
+                  class="text-input"
+                />
+              </label>
+            </div>
+            <div class="input-field">
+              <label for="nombre"
+                >Nombre(s)
+                <input
+                  type="text"
+                  name="nombre"
+                  id="nombre"
+                  class="text-input"
+                />
+              </label>
+            </div>
+            <div class="input-field">
+              <label for="funcion"
+                >Función
+                <select name="funcion" id="funcion">
+                  <option value="0">Director</option>
+                  <option value="1">Maestro(a) de Primer Grado</option>
+                  <option value="2">Maestro(a) de Segundo Grado</option>
+                  <option value="3">Maestro(a) de Tercer Grado</option>
+                  <option value="4">Maestro(a) de Cuarto Grado</option>
+                  <option value="5">Maestro(a) de Quinto Grado</option>
+                  <option value="6">Maestro(a) de Sexto Grado</option>
+                </select>
+              </label>
+            </div>
+          </form>
+        </div>
+      </div>
     </main>
     <footer class="footer"></footer>
   </body>
