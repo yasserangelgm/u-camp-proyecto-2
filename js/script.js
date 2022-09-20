@@ -5,13 +5,6 @@ let teachersForm = document.querySelector(".teachers");
 let schoolInstructions = document.getElementById("school-stage");
 let teacherInstructions = document.getElementById("teacher-stage");
 
-let teacherInfo = {
-  rfc: "",
-  paterno: "",
-  materno: "",
-  nombre: "",
-};
-
 const continueButton = document.getElementById("continue");
 const addButton = document.getElementById("add");
 
@@ -28,13 +21,18 @@ const addRow = (teacherInfo) => {
     td.innerHTML = teacherInfo[key];
     row.appendChild(td);
   }
+  console.log(row);
   tableBody.appendChild(row);
 };
 
 const fillTable = () => {
-  let table = document.getElementById("data");
   schoolInfo.teachers.forEach((teacher) => {
-    addRow(teacher);
+    let teacherDisplayInfo = {
+      fullname: `${teacher.paterno} ${teacher.materno} ${teacher.nombre}`,
+      rfc: teacher.rfc,
+      funcion: teacher.funcion,
+    };
+    addRow(teacherDisplayInfo);
   });
 };
 const showData = () => {
@@ -76,11 +74,15 @@ addButton.addEventListener("click", () => {
   let materno = document.getElementById("materno").value;
   let nombre = document.getElementById("nombre").value;
 
+  let functionSelect = document.getElementById("funcion");
+  let functionText = functionSelect.options[functionSelect.selectedIndex].text;
+
   let teacherInfo = {
     rfc: rfc,
     paterno: paterno,
     materno: materno,
     nombre: nombre,
+    funcion: functionText,
   };
 
   schoolInfo.teachers.push(teacherInfo);
