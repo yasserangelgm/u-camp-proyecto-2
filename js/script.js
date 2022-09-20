@@ -12,15 +12,40 @@ const loadData = () => {
   return (schoolInfo = localStorage.getItem("schoolInfo"));
 };
 
+const addDeleteButton = () => {
+  let deleteButton = document.createElement("button");
+  deleteButton.setAttribute("type", "button");
+  deleteButton.classList.add("delete-button");
+  deleteButton.innerHTML = "Borrar";
+  return deleteButton;
+};
+
+const addEditButton = () => {
+  let editButton = document.createElement("button");
+  editButton.setAttribute("type", "button");
+  editButton.classList.add("edit-button");
+  editButton.innerHTML = "Editar";
+  return editButton;
+};
+
 const addRow = (teacherInfo) => {
   let tableBody = document.getElementById("data");
   let row = document.createElement("tr");
 
-  for (let key in teacherInfo) {
+  let titles = Array.from(document.querySelectorAll("th"));
+  let values = Object.values(teacherInfo);
+
+  for (let i = 0; i < values.length; i++) {
     let td = document.createElement("td");
-    td.innerHTML = teacherInfo[key];
+    td.setAttribute("data-tittle", titles[i].innerHTML);
+    td.innerHTML = values[i];
     row.appendChild(td);
   }
+  let actionTD = document.createElement("td");
+  actionTD.setAttribute("data-tittle", "Acción");
+  actionTD.appendChild(addEditButton());
+  actionTD.appendChild(addDeleteButton());
+  row.appendChild(actionTD);
   console.log(row);
   tableBody.appendChild(row);
 };
@@ -87,5 +112,12 @@ addButton.addEventListener("click", () => {
 
   schoolInfo.teachers.push(teacherInfo);
   localStorage.setItem("schoolInfo", JSON.stringify(schoolInfo));
-  addRow(teacherInfo);
+
+  let teacherDisplayInfo = {
+    fullname: `${teacherInfo.paterno} ${teacherInfo.materno} ${teacherInfo.nombre}`,
+    rfc: teacherInfo.rfc,
+    funcion: teacherInfo.funcion,
+  };
+
+  addRow(teacherDisplayInfo);
 });
