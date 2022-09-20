@@ -19,28 +19,22 @@ const loadData = () => {
   return (schoolInfo = localStorage.getItem("schoolInfo"));
 };
 
-const addRow = (rfcValue, paternoValue, maternoValue, nombreValue) => {
-  let table = document.getElementById("data");
+const addRow = (teacherInfo) => {
+  let tableBody = document.getElementById("data");
   let row = document.createElement("tr");
-  let rfc = document.createElement("td");
-  rfc.innerHTML = rfcValue;
-  row.appendChild(rfc);
-  let paterno = document.createElement("td");
-  paterno.innerHTML = paternoValue;
-  row.appendChild(paterno);
-  let materno = document.createElement("td");
-  materno.innerHTML = maternoValue;
-  row.appendChild(materno);
-  let nombre = document.createElement("td");
-  nombre.innerHTML = nombreValue;
-  row.appendChild(nombre);
-  table.appendChild(row);
+
+  for (let key in teacherInfo) {
+    let td = document.createElement("td");
+    td.innerHTML = teacherInfo[key];
+    row.appendChild(td);
+  }
+  tableBody.appendChild(row);
 };
 
 const fillTable = () => {
   let table = document.getElementById("data");
   schoolInfo.teachers.forEach((teacher) => {
-    addRow(teacher.rfc, teacher.paterno, teacher.materno, teacher.nombre);
+    addRow(teacher);
   });
 };
 const showData = () => {
@@ -82,12 +76,14 @@ addButton.addEventListener("click", () => {
   let materno = document.getElementById("materno").value;
   let nombre = document.getElementById("nombre").value;
 
-  schoolInfo.teachers.push({
+  let teacherInfo = {
     rfc: rfc,
     paterno: paterno,
     materno: materno,
     nombre: nombre,
-  });
+  };
+
+  schoolInfo.teachers.push(teacherInfo);
   localStorage.setItem("schoolInfo", JSON.stringify(schoolInfo));
-  addRow(rfc, paterno, materno, nombre);
+  addRow(teacherInfo);
 });
