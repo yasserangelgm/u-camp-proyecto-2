@@ -20,69 +20,74 @@
             escuela. Para empezar digite la clave de la escuela y pulse
             continuar
           </p>
-          <form class="school">
-            <label for="cct"
-              >Clave de Centro de Trabajo
-              <input type="text" name="cct" id="cct" class="text-input" />
-            </label>
-            <button>Continuar</button>
-          </form>
-          <form class="teachers hidden">
-            <div class="input-field">
-              <label for="rfc"
-                >R.F.C.
-                <input type="text" name="rfc" id="rfc" class="text-input" />
-              </label>
-            </div>
-            <div class="input-field">
-              <label for="paterno"
-                >Apellido Paterno
-                <input
-                  type="text"
-                  name="paterno"
-                  id="paterno"
-                  class="text-input"
-                />
-              </label>
-            </div>
-            <div class="input-field">
-              <label for="materno"
-                >Apellido Materno
-                <input
-                  type="text"
-                  name="materno"
-                  id="materno"
-                  class="text-input"
-                />
-              </label>
-            </div>
-            <div class="input-field">
-              <label for="nombre"
-                >Nombre(s)
-                <input
-                  type="text"
-                  name="nombre"
-                  id="nombre"
-                  class="text-input"
-                />
-              </label>
-            </div>
-            <div class="input-field">
-              <label for="funcion"
-                >Función
-                <select name="funcion" id="funcion">
-                  <option value="0">Director</option>
-                  <option value="1">Maestro(a) de Primer Grado</option>
-                  <option value="2">Maestro(a) de Segundo Grado</option>
-                  <option value="3">Maestro(a) de Tercer Grado</option>
-                  <option value="4">Maestro(a) de Cuarto Grado</option>
-                  <option value="5">Maestro(a) de Quinto Grado</option>
-                  <option value="6">Maestro(a) de Sexto Grado</option>
-                </select>
-              </label>
-            </div>
-          </form>
+          <p id="teacher-stage" class="hidden">
+            En esta sección Usted podra administrar la adscripción de personal
+            de su centro de trabajo. A continuación escriba los datos que se
+            piden y pulse el botón Guardar para agregar al trabajador a la
+            lista.
+          </p>
         </div>
+        <form class="school">
+          <label for="cct"
+            >Clave de Centro de Trabajo
+            <input type="text" name="cct" id="cct" class="text-input" />
+          </label>
+          <button id="continue" type="button">Continuar</button>
+        </form>
+        <form class="teachers hidden">
+          <div class="input-field">
+            <label for="rfc">R.F.C. </label
+            ><input type="text" name="rfc" id="rfc" class="text-input" />
+          </div>
+          <div class="input-field">
+            <label for="paterno">Apellido Paterno </label
+            ><input
+              type="text"
+              name="paterno"
+              id="paterno"
+              class="text-input"
+            />
+          </div>
+          <div class="input-field">
+            <label for="materno">Apellido Materno </label
+            ><input
+              type="text"
+              name="materno"
+              id="materno"
+              class="text-input"
+            />
+          </div>
+          <div class="input-field">
+            <label for="nombre">Nombre(s) </label
+            ><input type="text" name="nombre" id="nombre" class="text-input" />
+          </div>
+          <div class="input-field">
+            <label for="funcion">Función </label
+            ><select name="funcion" id="funcion">
+              <option value="0">Director</option>
+              <option value="1">Maestro(a) de Primer Grado</option>
+              <option value="2">Maestro(a) de Segundo Grado</option>
+              <option value="3">Maestro(a) de Tercer Grado</option>
+              <option value="4">Maestro(a) de Cuarto Grado</option>
+              <option value="5">Maestro(a) de Quinto Grado</option>
+              <option value="6">Maestro(a) de Sexto Grado</option>
+            </select>
+          </div>
+          <button type="button" id="add">Agregar</button
+          ><button type="button" id="cancel">Cancelar</button>
+        </form>
+        <section id="list">
+          <div class="container">
+            <table id="data">
+              <tr>
+                <th>R.F.C.</th>
+                <th>Nombre Completo</th>
+                <th>Función</th>
+                <th>Acción</th>
+              </tr>
+            </table>
+          </div>
+        </section>
       </div>
     </main>
     <footer class="footer"></footer>
