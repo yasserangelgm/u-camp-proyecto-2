@@ -17,7 +17,6 @@ const addDeleteButton = () => {
   deleteButton.setAttribute("type", "button");
   deleteButton.classList.add("delete-button");
   deleteButton.innerHTML = "Borrar";
-
   deleteButton.addEventListener("click", (e) => {
     let node = e.target.parentNode.parentNode;
     let rfc = node.childNodes[1].innerHTML;
@@ -26,7 +25,6 @@ const addDeleteButton = () => {
     localStorage.setItem("schoolInfo", JSON.stringify(schoolInfo));
     e.target.parentNode.parentNode.parentNode.removeChild(node);
   });
-
   return deleteButton;
 };
 
@@ -37,7 +35,20 @@ const addEditButton = () => {
   editButton.innerHTML = "Editar";
 
   editButton.addEventListener("click", (e) => {
-    let rfc = e.target.parentNode.parentNode.childNodes[1].innerHTML;
+    let inputs = document.querySelectorAll(".teachers input ");
+    let node = e.target.parentNode.parentNode;
+    let rfc = node.childNodes[1].innerHTML;
+    let data = Object.values(
+      schoolInfo.teachers.find((item) => item.rfc === rfc)
+    );
+    for (let i = 0; i < data.length - 1; i++) {
+      inputs[i].value = data[i];
+    }
+
+    let options = Array.from(document.querySelectorAll("#funcion option"));
+    document.getElementById("funcion").selectedIndex = options.findIndex(
+      (item) => item.innerHTML === data[data.length - 1]
+    );
   });
   return editButton;
 };

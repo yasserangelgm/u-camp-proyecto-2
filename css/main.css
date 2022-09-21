@@ -28,6 +28,7 @@ body {
 }
 
 /* Utilities */
+
 main {
   height: calc(100vh - 104px);
 }
