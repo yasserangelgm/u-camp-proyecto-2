@@ -1,12 +1,13 @@
 let schoolInfo = {};
-let showTeacherForm = false;
 let schoolForm = document.querySelector(".school");
 let teachersForm = document.querySelector(".teachers");
 let schoolInstructions = document.getElementById("school-stage");
 let teacherInstructions = document.getElementById("teacher-stage");
-
+let editMode = false;
+let currentIndex = -1;
 const continueButton = document.getElementById("continue");
 const addButton = document.getElementById("add");
+const cancelButton = document.getElementById("cancel");
 
 const loadData = () => {
   return (schoolInfo = localStorage.getItem("schoolInfo"));
@@ -35,21 +36,28 @@ const addEditButton = () => {
   editButton.innerHTML = "Editar";
 
   editButton.addEventListener("click", (e) => {
+    editMode = true;
+    addButton.innerHTML = "Editar";
     let inputs = document.querySelectorAll(".teachers input ");
     let node = e.target.parentNode.parentNode;
     let rfc = node.childNodes[1].innerHTML;
     let data = Object.values(
       schoolInfo.teachers.find((item) => item.rfc === rfc)
     );
+
+    currentIndex = schoolInfo.teachers.findIndex((item) => item.rfc === rfc);
+
     for (let i = 0; i < data.length - 1; i++) {
       inputs[i].value = data[i];
     }
-
     let options = Array.from(document.querySelectorAll("#funcion option"));
+
     document.getElementById("funcion").selectedIndex = options.findIndex(
       (item) => item.innerHTML === data[data.length - 1]
     );
+    document.getElementById("rfc").focus();
   });
+
   return editButton;
 };
 
@@ -74,7 +82,6 @@ const addRow = (teacherInfo) => {
     row.appendChild(td);
   }
   let actionTD = document.createElement("td");
-  actionTD.setAttribute("data-tittle", "Acción");
   actionTD.appendChild(addEditButton());
   actionTD.appendChild(addDeleteButton());
   row.appendChild(actionTD);
@@ -126,6 +133,7 @@ continueButton.addEventListener("click", () => {
 });
 
 addButton.addEventListener("click", () => {
+  console.log(editMode);
   let rfc = document.getElementById("rfc").value;
   let paterno = document.getElementById("paterno").value;
   let materno = document.getElementById("materno").value;
@@ -142,14 +150,32 @@ addButton.addEventListener("click", () => {
     funcion: functionText,
   };
 
-  schoolInfo.teachers.push(teacherInfo);
+  if (!editMode) {
+    schoolInfo.teachers.push(teacherInfo);
+    let teacherDisplayInfo = {
+      fullname: `${teacherInfo.paterno} ${teacherInfo.materno} ${teacherInfo.nombre}`,
+      rfc: teacherInfo.rfc,
+      funcion: teacherInfo.funcion,
+    };
+
+    addRow(teacherDisplayInfo);
+  } else {
+    console.log(currentIndex);
+    console.log(teacherInfo);
+    schoolInfo.teachers[currentIndex] = JSON.parse(JSON.stringify(teacherInfo));
+    editMode = false;
+    addButton.innerHTML = "Guardar";
+  }
+
   localStorage.setItem("schoolInfo", JSON.stringify(schoolInfo));
 
-  let teacherDisplayInfo = {
-    fullname: `${teacherInfo.paterno} ${teacherInfo.materno} ${teacherInfo.nombre}`,
-    rfc: teacherInfo.rfc,
-    funcion: teacherInfo.funcion,
-  };
+  document.getElementById("cancel").click();
+});
 
-  addRow(teacherDisplayInfo);
+cancelButton.addEventListener("click", () => {
+  document.getElementById("rfc").focus();
+  addButton.innerHTML = "Guardar";
+  if (editMode) {
+    editMode = false;
+  }
 });
