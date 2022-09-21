@@ -40,7 +40,11 @@ h1 {
   color: var(--main-dark-font-color);
   text-align: center;
 }
-
+h2{
+  color: var(--main-dark-font-color);
+  font-size: 0.7rem;
+  text-align: center;
+}
 .container {
   width: 100%;
   height: auto;
@@ -52,6 +56,19 @@ h1 {
   display: none;
 }
 
+input, select{
+  border-radius: 5px;
+  border: 1px solid #090c1256;
+  line-height: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+select{
+  height: 1.7rem;
+}
+label{
+  padding:0.2rem 0;
+}
 /* #list {
   overflow-y: scroll;
 } */
@@ -80,6 +97,10 @@ main {
   overflow-y: scroll;
   padding: 1rem;
   color: var(--main-dark-font-color);
+}
+
+.teachers{
+  margin: 0 0 1.7rem 0;
 }
 
 /* Footer */
@@ -122,9 +143,12 @@ main {
   display: none;
   visibility: hidden;
 }
-
+.responsive-table tbody tr td:last-of-type{
+  margin-bottom: 1em;
+}
 .responsive-table tbody tr {
   margin-bottom: 1em;
+  border-bottom: 1px solid #090c12a9 ;
 }
 
 .responsive-table tbody th[scope="row"] {

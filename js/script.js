@@ -113,6 +113,9 @@ const showData = () => {
   schoolForm.classList.toggle("hidden");
   schoolInstructions.classList.toggle("hidden");
   teacherInstructions.classList.toggle("hidden");
+  document.querySelector('#list h2 span').innerHTML=schoolInfo.claveEscuela;
+
+  schoolInfo.teachers.length>0?document.querySelector('.warning').innerHTML="ok":document.querySelector('.warning').innerHTML="Aún no ha guardado ningún registro";
 };
 
 window.addEventListener("load", () => {
