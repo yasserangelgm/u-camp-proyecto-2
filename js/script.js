@@ -88,6 +88,15 @@ const addRow = (teacherInfo) => {
   tableBody.appendChild(row);
 };
 
+
+const updateRow = (index, teacherInfo) => {
+
+  let tr = document.querySelectorAll(`#data tr:nth-child(${index}) *`);
+  let values = Object.values(teacherInfo);
+  for (let i = 0; i < values.length; i++) {
+    tr[i].innerHTML = values[i];
+  }
+}
 const fillTable = () => {
   schoolInfo.teachers.forEach((teacher) => {
     let teacherDisplayInfo = {
@@ -133,7 +142,6 @@ continueButton.addEventListener("click", () => {
 });
 
 addButton.addEventListener("click", () => {
-  console.log(editMode);
   let rfc = document.getElementById("rfc").value;
   let paterno = document.getElementById("paterno").value;
   let materno = document.getElementById("materno").value;
@@ -149,20 +157,19 @@ addButton.addEventListener("click", () => {
     nombre: nombre,
     funcion: functionText,
   };
-
+  let teacherDisplayInfo = {
+    fullname: `${teacherInfo.paterno} ${teacherInfo.materno} ${teacherInfo.nombre}`,
+    rfc: teacherInfo.rfc,
+    funcion: teacherInfo.funcion,
+  };
   if (!editMode) {
     schoolInfo.teachers.push(teacherInfo);
-    let teacherDisplayInfo = {
-      fullname: `${teacherInfo.paterno} ${teacherInfo.materno} ${teacherInfo.nombre}`,
-      rfc: teacherInfo.rfc,
-      funcion: teacherInfo.funcion,
-    };
+
 
     addRow(teacherDisplayInfo);
   } else {
-    console.log(currentIndex);
-    console.log(teacherInfo);
     schoolInfo.teachers[currentIndex] = JSON.parse(JSON.stringify(teacherInfo));
+    updateRow(currentIndex + 1, teacherDisplayInfo);
     editMode = false;
     addButton.innerHTML = "Guardar";
   }

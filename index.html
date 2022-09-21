@@ -8,90 +8,96 @@
     <title>Sistema Estatal de Control Escolar</title>
   </head>
   <body>
-    <header class="header">
-      <h1>SEG - Sistema Estatal de Control Escolar</h1>
-    </header>
-    <main>
-      <div class="container">
-        <div class="instructions">
-          <p>Bienvenido al Sistema Estatal de Control Escolar</p>
-          <p id="school-stage">
-            En este módulo deberá capturar los datos de los maestros de su
-            escuela. Para empezar digite la clave de la escuela y pulse
-            continuar
-          </p>
-          <p id="teacher-stage" class="hidden">
-            En esta sección Usted podra administrar la adscripción de personal
-            de su centro de trabajo. A continuación escriba los datos que se
-            piden y pulse el botón Guardar para agregar al trabajador a la
-            lista.
-          </p>
-        </div>
-        <form class="school">
-          <label for="cct"
-            >Clave de Centro de Trabajo
-            <input type="text" name="cct" id="cct" class="text-input" />
-          </label>
-          <button id="continue" type="button">Continuar</button>
-        </form>
-        <form class="teachers hidden">
-          <div class="input-field">
-            <label for="rfc">R.F.C. </label
-            ><input type="text" name="rfc" id="rfc" class="text-input" />
-          </div>
-          <div class="input-field">
-            <label for="paterno">Apellido Paterno </label
-            ><input
-              type="text"
-              name="paterno"
-              id="paterno"
-              class="text-input"
-            />
-          </div>
-          <div class="input-field">
-            <label for="materno">Apellido Materno </label
-            ><input
-              type="text"
-              name="materno"
-              id="materno"
-              class="text-input"
-            />
-          </div>
-          <div class="input-field">
-            <label for="nombre">Nombre(s) </label
-            ><input type="text" name="nombre" id="nombre" class="text-input" />
-          </div>
-          <div class="input-field">
-            <label for="funcion">Función </label
-            ><select name="funcion" id="funcion">
-              <option value="0">Director</option>
-              <option value="1">Maestro(a) de Primer Grado</option>
-              <option value="2">Maestro(a) de Segundo Grado</option>
-              <option value="3">Maestro(a) de Tercer Grado</option>
-              <option value="4">Maestro(a) de Cuarto Grado</option>
-              <option value="5">Maestro(a) de Quinto Grado</option>
-              <option value="6">Maestro(a) de Sexto Grado</option>
-            </select>
-          </div>
-          <button type="button" id="add">Agregar</button
-          ><button type="reset" id="cancel">Cancelar</button>
-        </form>
-        <section id="list">
-          <table class="responsive-table">
-            <thead>
-              <tr>
-                <th scope="col">Nombre Completo</th>
-                <th scope="col">R.F.C.</th>
-                <th scope="col">Función</th>
-                <th scope="col">Acción</th>
-              </tr>
-            </thead>
-            <tbody id="data"></tbody>
-          </table>
-        </section>
+
+  <header class="header">
+    <h1>SEG - Sistema Estatal de Control Escolar</h1>
+  </header>
+  <main>
+    
+      <div class="instructions">
+        <p>Bienvenido al Sistema Estatal de Control Escolar</p>
+        <p id="school-stage">
+          En este módulo deberá capturar los datos de los maestros de su
+          escuela. Para empezar digite la clave de la escuela y pulse
+          continuar
+        </p>
+        <p id="teacher-stage" class="hidden">
+          En esta sección Usted podra administrar la adscripción de personal
+          de su centro de trabajo. A continuación escriba los datos que se
+          piden y pulse el botón Guardar para agregar al trabajador a la
+          lista.
+        </p>
       </div>
-    </main>
-    <footer class="footer"></footer>
+      <form class="school">
+        <label for="cct"
+          >Clave de Centro de Trabajo
+          <input type="text" name="cct" id="cct" class="text-input" />
+        </label>
+        <button id="continue" type="button">Continuar</button>
+      </form>
+      <form class="teachers hidden">
+        <div class="input-field">
+          <label for="rfc">R.F.C. </label
+          ><input type="text" name="rfc" id="rfc" class="text-input" />
+        </div>
+        <div class="input-field">
+          <label for="paterno">Apellido Paterno </label
+          ><input
+            type="text"
+            name="paterno"
+            id="paterno"
+            class="text-input"
+          />
+        </div>
+        <div class="input-field">
+          <label for="materno">Apellido Materno </label
+          ><input
+            type="text"
+            name="materno"
+            id="materno"
+            class="text-input"
+          />
+        </div>
+        <div class="input-field">
+          <label for="nombre">Nombre(s) </label
+          ><input type="text" name="nombre" id="nombre" class="text-input" />
+        </div>
+        <div class="input-field">
+          <label for="funcion">Función </label
+          ><select name="funcion" id="funcion">
+            <option value="0">Director</option>
+            <option value="1">Maestro(a) de Primer Grado</option>
+            <option value="2">Maestro(a) de Segundo Grado</option>
+            <option value="3">Maestro(a) de Tercer Grado</option>
+            <option value="4">Maestro(a) de Cuarto Grado</option>
+            <option value="5">Maestro(a) de Quinto Grado</option>
+            <option value="6">Maestro(a) de Sexto Grado</option>
+          </select>
+        </div>
+        <button type="button" id="add">Agregar</button
+        ><button type="reset" id="cancel">Cancelar</button>
+      </form>
+      <section id="list">
+        <table class="responsive-table">
+          <thead>
+            <tr>
+              <th scope="col">Nombre Completo</th>
+              <th scope="col">R.F.C.</th>
+              <th scope="col">Función</th>
+              <th scope="col">Acción</th>
+            </tr>
+          </thead>
+          <tbody id="data"></tbody>
+        </table>
+      </section>
+    
+  </main>
+  <footer class="footer"></footer>
+
+
+
+
+    
   </body>
   <script src="/js/script.js"></script>
 </html>
