@@ -17,6 +17,16 @@ const addDeleteButton = () => {
   deleteButton.setAttribute("type", "button");
   deleteButton.classList.add("delete-button");
   deleteButton.innerHTML = "Borrar";
+
+  deleteButton.addEventListener("click", (e) => {
+    let node = e.target.parentNode.parentNode;
+    let rfc = node.childNodes[1].innerHTML;
+    let index = schoolInfo.teachers.findIndex((item) => item.rfc === rfc);
+    schoolInfo.teachers.splice(index, 1);
+    localStorage.setItem("schoolInfo", JSON.stringify(schoolInfo));
+    e.target.parentNode.parentNode.parentNode.removeChild(node);
+  });
+
   return deleteButton;
 };
 
@@ -25,6 +35,10 @@ const addEditButton = () => {
   editButton.setAttribute("type", "button");
   editButton.classList.add("edit-button");
   editButton.innerHTML = "Editar";
+
+  editButton.addEventListener("click", (e) => {
+    let rfc = e.target.parentNode.parentNode.childNodes[1].innerHTML;
+  });
   return editButton;
 };
 
@@ -36,7 +50,14 @@ const addRow = (teacherInfo) => {
   let values = Object.values(teacherInfo);
 
   for (let i = 0; i < values.length; i++) {
-    let td = document.createElement("td");
+    let td = null;
+
+    if (i === 0) {
+      td = document.createElement("th");
+      td.setAttribute("scope", "row");
+    } else {
+      td = document.createElement("td");
+    }
     td.setAttribute("data-tittle", titles[i].innerHTML);
     td.innerHTML = values[i];
     row.appendChild(td);
@@ -46,7 +67,6 @@ const addRow = (teacherInfo) => {
   actionTD.appendChild(addEditButton());
   actionTD.appendChild(addDeleteButton());
   row.appendChild(actionTD);
-  console.log(row);
   tableBody.appendChild(row);
 };
 
@@ -60,6 +80,7 @@ const fillTable = () => {
     addRow(teacherDisplayInfo);
   });
 };
+
 const showData = () => {
   teachersForm.classList.toggle("hidden");
   schoolForm.classList.toggle("hidden");
