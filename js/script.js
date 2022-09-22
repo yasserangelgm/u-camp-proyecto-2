@@ -25,6 +25,8 @@ const addDeleteButton = () => {
     schoolInfo.teachers.splice(index, 1);
     localStorage.setItem("schoolInfo", JSON.stringify(schoolInfo));
     e.target.parentNode.parentNode.parentNode.removeChild(node);
+    updateWarning();
+    editMode ? document.getElementById("cancel").click() : "";
   });
   return deleteButton;
 };
@@ -88,15 +90,19 @@ const addRow = (teacherInfo) => {
   tableBody.appendChild(row);
 };
 
-
+const updateWarning = () => {
+  schoolInfo.teachers.length > 0
+    ? (document.querySelector(".warning").innerHTML = "")
+    : (document.querySelector(".warning").innerHTML =
+        "Aún no ha guardado ningún registro");
+};
 const updateRow = (index, teacherInfo) => {
-
   let tr = document.querySelectorAll(`#data tr:nth-child(${index}) *`);
   let values = Object.values(teacherInfo);
   for (let i = 0; i < values.length; i++) {
     tr[i].innerHTML = values[i];
   }
-}
+};
 const fillTable = () => {
   schoolInfo.teachers.forEach((teacher) => {
     let teacherDisplayInfo = {
@@ -113,9 +119,8 @@ const showData = () => {
   schoolForm.classList.toggle("hidden");
   schoolInstructions.classList.toggle("hidden");
   teacherInstructions.classList.toggle("hidden");
-  document.querySelector('#list h2 span').innerHTML=schoolInfo.claveEscuela;
-
-  schoolInfo.teachers.length>0?document.querySelector('.warning').innerHTML="ok":document.querySelector('.warning').innerHTML="Aún no ha guardado ningún registro";
+  document.querySelector("#list h2 span").innerHTML = schoolInfo.claveEscuela;
+  updateWarning();
 };
 
 window.addEventListener("load", () => {
@@ -167,8 +172,6 @@ addButton.addEventListener("click", () => {
   };
   if (!editMode) {
     schoolInfo.teachers.push(teacherInfo);
-
-
     addRow(teacherDisplayInfo);
   } else {
     schoolInfo.teachers[currentIndex] = JSON.parse(JSON.stringify(teacherInfo));
@@ -176,9 +179,8 @@ addButton.addEventListener("click", () => {
     editMode = false;
     addButton.innerHTML = "Guardar";
   }
-
+  updateWarning();
   localStorage.setItem("schoolInfo", JSON.stringify(schoolInfo));
-
   document.getElementById("cancel").click();
 });
 
