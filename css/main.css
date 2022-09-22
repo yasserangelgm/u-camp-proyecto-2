@@ -1,7 +1,7 @@
 /* CSS Variables */
 
 :root {
-  --main-bg-color: #babdc2;
+  --main-bg-color: #ffffff;
   --main-light-bg-color: #f0faed;
   --main-light-font-color: #f0f8ff;
   --main-dark-font-color: #090c12;
@@ -27,11 +27,9 @@ html {
   background-color: var(--main-light-bg-color);
   color: var(--main-light-font-color);
   overflow: hidden;
-
 }
 
 /* Utilities */
-
 
 h1 {
   font-size: 1rem;
@@ -40,7 +38,7 @@ h1 {
   color: var(--main-dark-font-color);
   text-align: center;
 }
-h2{
+h2 {
   color: var(--main-dark-font-color);
   font-size: 0.7rem;
   text-align: center;
@@ -56,18 +54,19 @@ h2{
   display: none;
 }
 
-input, select{
+input,
+select {
   border-radius: 5px;
   border: 1px solid #090c1256;
   line-height: 1.5rem;
   margin-bottom: 0.5rem;
 }
 
-select{
+select {
   height: 1.7rem;
 }
-label{
-  padding:0.2rem 0;
+label {
+  padding: 0.2rem 0;
 }
 /* #list {
   overflow-y: scroll;
@@ -94,31 +93,35 @@ main {
   display: flex;
   flex-direction: column;
   height: calc(100vh - 104px);
-  overflow-y: scroll;
-  padding: 1rem;
+  overflow-y: auto;
+  padding: 3%;
   color: var(--main-dark-font-color);
 }
 
-.teachers{
+.teachers {
   margin: 0 0 1.7rem 0;
+  padding: 0.5rem;
+  transition: all 0.3 ease;
+  background-color: transparent;
 }
 
+.teachers.edit {
+  background-color: #ffc10795;
+  transition: 2s background-color cubic-bezier(0.075, 0.82, 0.165, 1);
+}
 /* Footer */
 
 .footer {
   width: 100%;
   height: 52px;
   background-color: var(--main-dark-font-color);
-
   bottom: 0;
 }
-
 
 .input-field {
   display: flex;
   flex-direction: column;
 }
-
 
 /* Table */
 
@@ -143,17 +146,27 @@ main {
   display: none;
   visibility: hidden;
 }
-.responsive-table tbody tr td:last-of-type{
+
+.responsive-table tbody tr {
+  background-color: #ffffff;
+}
+
+.responsive-table tbody th {
+  background-color: var(--header-bg-color);
+  line-height: 2rem;
+}
+
+.responsive-table tbody tr td:last-of-type {
   margin-bottom: 1em;
 }
 .responsive-table tbody tr {
   margin-bottom: 1em;
-  border-bottom: 1px solid #090c12a9 ;
+  border-bottom: 1px solid #090c12a9;
 }
 
 .responsive-table tbody th[scope="row"] {
-  font-weight: 900;
-  color: var(--main-dark-font-color);
+  color: var(--main-light-font-color);
+  font-weight: normal;
 }
 
 .responsive-table th,
@@ -167,4 +180,90 @@ main {
   font-weight: bold;
   color: var(--main-dark-font-color);
   margin-right: 0.3em;
+}
+
+/* Media queries */
+
+@media (min-width: 52em) {
+  main {
+    padding: 2%;
+  }
+
+  .responsive-table {
+    width: 100%;
+    display: table;
+    font-size: 0.9em;
+  }
+
+  .responsive-table thead {
+    display: table-header-group;
+    visibility: visible;
+    height: auto;
+    width: 100%;
+    overflow: auto;
+  }
+  .responsive-table thead th {
+    background-color: #265b8c;
+    border: 1px solid #3a82c6;
+    color: var(--main-light-font-color);
+    font-weight: normal;
+    line-height: 2em;
+    text-align: center;
+  }
+
+  .responsive-table thead th:first-of-type {
+    text-align: left;
+  }
+  .responsive-table tbody {
+    display: table-row-group;
+  }
+
+  .responsive-table tr {
+    display: table-row;
+    border-width: 1px;
+  }
+
+  .responsive-table th,
+  .responsive-table td {
+    display: table-cell;
+    padding: 0.5em;
+  }
+
+  .responsive-table tbody {
+    background-color: var(--main-light-bg-color);
+  }
+
+  .responsive-table tbody td {
+    text-align: center;
+    padding: 1rem;
+  }
+  .responsive-table tbody td,
+  .responsive-table tbody th {
+    border-left: 1px solid #3a82c6;
+    border-bottom: 1px solid #3a82c6;
+    background-color: var(--main-bg-color);
+  }
+  .responsive-table tbody th[scope="row"] {
+    color: var(--main-dark-font-color);
+    font-weight: 900;
+  }
+  .responsive-table tbody td:last-of-type {
+    border-right: 1px solid #3a82c6;
+  }
+  .responsive-table tbody td[data-tittle]::before {
+    content: none;
+  }
+}
+
+@media (min-width: 75em) {
+  main {
+    max-width: 75em;
+    margin: 0 auto;
+    padding: 2em 0;
+  }
+}
+/* List */
+
+#list .warning {
+  margin-bottom: 2rem;
 }

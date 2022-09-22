@@ -58,6 +58,7 @@ const addEditButton = () => {
       (item) => item.innerHTML === data[data.length - 1]
     );
     document.getElementById("rfc").focus();
+    document.querySelector(".teachers").classList.add("edit");
   });
 
   return editButton;
@@ -92,7 +93,9 @@ const addRow = (teacherInfo) => {
 
 const updateWarning = () => {
   schoolInfo.teachers.length > 0
-    ? (document.querySelector(".warning").innerHTML = "")
+    ? (document.querySelector(
+        ".warning"
+      ).innerHTML = `Se han encontrado ${schoolInfo.teachers.length} registros`)
     : (document.querySelector(".warning").innerHTML =
         "Aún no ha guardado ningún registro");
 };
@@ -190,4 +193,5 @@ cancelButton.addEventListener("click", () => {
   if (editMode) {
     editMode = false;
   }
+  document.querySelector(".teachers").classList.remove("edit");
 });
