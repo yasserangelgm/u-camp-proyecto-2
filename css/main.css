@@ -94,8 +94,13 @@ main {
   flex-direction: column;
   height: calc(100vh - 104px);
   overflow-y: auto;
+  scrollbar-width: none;
   padding: 3%;
   color: var(--main-dark-font-color);
+}
+
+main::-webkit-scrollbar {
+  width: 0;
 }
 
 .teachers {
@@ -163,7 +168,10 @@ main {
   margin-bottom: 1em;
   border-bottom: 1px solid #090c12a9;
 }
-
+.responsive-table tbody th,
+.responsive-table tbody td {
+  padding-left: 0.5rem;
+}
 .responsive-table tbody th[scope="row"] {
   color: var(--main-light-font-color);
   font-weight: normal;
