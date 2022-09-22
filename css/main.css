@@ -68,9 +68,87 @@ select {
 label {
   padding: 0.2rem 0;
 }
-/* #list {
-  overflow-y: scroll;
-} */
+
+button {
+  cursor: pointer;
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  vertical-align: middle;
+  user-select: none;
+  border: 1px solid transparent;
+  padding: 0.3rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.primary {
+  color: #fff;
+  background-color: #2d7bc5;
+  border-color: #2d7bc5;
+}
+
+.primary:hover {
+  background-color: #2d6ca7;
+  border-color: #2d6ca7;
+}
+
+.primary:active {
+  border-color: #8cb7e0ff;
+}
+
+.secondary {
+  color: #fff;
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+.secondary:hover {
+  background-color: #5e656c;
+  border-color: #5e656c;
+}
+.secondary:active {
+  border-color: #abb1b7;
+}
+
+#add,
+.responsive-table .primary {
+  margin-right: 0.375rem;
+}
+
+.responsive-table .primary,
+.delete-button {
+  padding: 0.2rem 0.75rem;
+}
+.edit-button {
+  color: #fff;
+  background-color: #28a845;
+  border-color: #28a845;
+}
+.edit-button:hover {
+  background-color: #22903b;
+  border-color: #22903b;
+}
+.edit-button:active {
+  border-color: #6edc87;
+}
+
+.delete-button {
+  color: #fff;
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+.delete-button:hover {
+  background-color: #ce2434;
+  border-color: #ce2434;
+}
+.delete-button:active {
+  border-color: #ee9ca4;
+}
+
 /* Header */
 
 .header {
@@ -102,6 +180,9 @@ main {
 main::-webkit-scrollbar {
   width: 0;
 }
+.instructions {
+  padding: 0.5rem;
+}
 
 .teachers {
   margin: 0 0 1.7rem 0;
@@ -113,6 +194,10 @@ main::-webkit-scrollbar {
 .teachers.edit {
   background-color: #ffc10795;
   transition: 2s background-color cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.teachers button {
+  width: 90px;
 }
 /* Footer */
 
@@ -126,6 +211,10 @@ main::-webkit-scrollbar {
 .input-field {
   display: flex;
   flex-direction: column;
+}
+
+.input-field:last-of-type {
+  margin-bottom: 0.5rem;
 }
 
 /* Table */
@@ -267,7 +356,7 @@ main::-webkit-scrollbar {
   main {
     max-width: 75em;
     margin: 0 auto;
-    padding: 2em 0;
+    padding: 0 0;
   }
 }
 /* List */

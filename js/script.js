@@ -34,7 +34,7 @@ const addDeleteButton = () => {
 const addEditButton = () => {
   let editButton = document.createElement("button");
   editButton.setAttribute("type", "button");
-  editButton.classList.add("edit-button");
+  editButton.classList.add("primary");
   editButton.innerHTML = "Editar";
 
   editButton.addEventListener("click", (e) => {
