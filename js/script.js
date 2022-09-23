@@ -9,6 +9,44 @@ const continueButton = document.getElementById("continue");
 const addButton = document.getElementById("add");
 const cancelButton = document.getElementById("cancel");
 
+const validateData = () => {
+  let response = {
+    result: true,
+    message: "",
+  };
+
+  let filledInputs = [...document.querySelectorAll(".teachers input")].reduce(
+    (prevResult, input) => {
+      return prevResult && input.value !== "";
+    },
+    document.querySelectorAll(".teachers input")[0].value !== ""
+  );
+  if (!filledInputs) {
+    response.result = false;
+    response.message = "Todos los campos son obligatorios";
+  } else if (
+    schoolInfo.teachers.find(
+      (item) => item.rfc === document.getElementById("rfc").value
+    ) &&
+    !editMode
+  ) {
+    response.result = false;
+    response.message = "El RFC ya se encuentra registrado";
+  } else if (
+    schoolInfo.teachers.find(
+      (item) =>
+        item.funcion === document.getElementById("funcion").options.value
+    ) &&
+    schoolInfo.teachers.length > 0 &&
+    document.getElementById("funcion").options.value === "Director"
+  ) {
+    response.result = false;
+    response.message = "Ya existe una persona con función de Director";
+  }
+  console.log(response);
+  return response;
+};
+
 const loadData = () => {
   return (schoolInfo = localStorage.getItem("schoolInfo"));
 };
@@ -46,14 +84,11 @@ const addEditButton = () => {
     let data = Object.values(
       schoolInfo.teachers.find((item) => item.rfc === rfc)
     );
-
     currentIndex = schoolInfo.teachers.findIndex((item) => item.rfc === rfc);
-
     for (let i = 0; i < data.length - 1; i++) {
       inputs[i].value = data[i];
     }
     let options = Array.from(document.querySelectorAll("#funcion option"));
-
     document.getElementById("funcion").selectedIndex = options.findIndex(
       (item) => item.innerHTML === data[data.length - 1]
     );
@@ -67,13 +102,11 @@ const addEditButton = () => {
 const addRow = (teacherInfo) => {
   let tableBody = document.getElementById("data");
   let row = document.createElement("tr");
-
   let titles = Array.from(document.querySelectorAll("th"));
   let values = Object.values(teacherInfo);
 
   for (let i = 0; i < values.length; i++) {
     let td = null;
-
     if (i === 0) {
       td = document.createElement("th");
       td.setAttribute("scope", "row");
@@ -99,6 +132,7 @@ const updateWarning = () => {
     : (document.querySelector(".warning").innerHTML =
         "Aún no ha guardado ningún registro");
 };
+
 const updateRow = (index, teacherInfo) => {
   let tr = document.querySelectorAll(`#data tr:nth-child(${index}) *`);
   let values = Object.values(teacherInfo);
@@ -106,6 +140,7 @@ const updateRow = (index, teacherInfo) => {
     tr[i].innerHTML = values[i];
   }
 };
+
 const fillTable = () => {
   schoolInfo.teachers.forEach((teacher) => {
     let teacherDisplayInfo = {
@@ -158,32 +193,39 @@ addButton.addEventListener("click", () => {
   let materno = document.getElementById("materno").value;
   let nombre = document.getElementById("nombre").value;
 
-  let functionSelect = document.getElementById("funcion");
-  let functionText = functionSelect.options[functionSelect.selectedIndex].text;
+  let funcion = document.getElementById("funcion").value;
+  /*   let funcion = functionSelect.options[functionSelect.selectedIndex].text; */
 
-  let teacherInfo = {
-    rfc: rfc,
-    paterno: paterno,
-    materno: materno,
-    nombre: nombre,
-    funcion: functionText,
-  };
-  let teacherDisplayInfo = {
-    fullname: `${teacherInfo.paterno} ${teacherInfo.materno} ${teacherInfo.nombre}`,
-    rfc: teacherInfo.rfc,
-    funcion: teacherInfo.funcion,
-  };
-  if (!editMode) {
-    schoolInfo.teachers.push(teacherInfo);
-    addRow(teacherDisplayInfo);
-  } else {
-    schoolInfo.teachers[currentIndex] = JSON.parse(JSON.stringify(teacherInfo));
-    updateRow(currentIndex + 1, teacherDisplayInfo);
-    editMode = false;
-    addButton.innerHTML = "Guardar";
+  if (validateData().result) {
+    let teacherInfo = {
+      rfc: rfc,
+      paterno: paterno,
+      materno: materno,
+      nombre: nombre,
+      funcion: funcion,
+    };
+
+    let teacherDisplayInfo = {
+      fullname: `${teacherInfo.paterno} ${teacherInfo.materno} ${teacherInfo.nombre}`,
+      rfc: teacherInfo.rfc,
+      funcion: teacherInfo.funcion,
+    };
+
+    if (!editMode) {
+      schoolInfo.teachers.push(teacherInfo);
+      addRow(teacherDisplayInfo);
+    } else {
+      schoolInfo.teachers[currentIndex] = JSON.parse(
+        JSON.stringify(teacherInfo)
+      );
+      updateRow(currentIndex + 1, teacherDisplayInfo);
+      editMode = false;
+      addButton.innerHTML = "Guardar";
+    }
+    updateWarning();
+    localStorage.setItem("schoolInfo", JSON.stringify(schoolInfo));
   }
-  updateWarning();
-  localStorage.setItem("schoolInfo", JSON.stringify(schoolInfo));
+
   document.getElementById("cancel").click();
 });
 
