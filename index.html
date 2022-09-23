@@ -5,8 +5,100 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/css/main.css" />
-    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
+      integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <title>Sistema Estatal de Control Escolar</title>
   </head>
-  <body></body>
+  <body>
+    <header class="header">
+      <h1>SEG - Sistema Estatal de Control Escolar</h1>
+    </header>
+    <main>
+      <div class="instructions">
+        <p>Bienvenido al Sistema Estatal de Control Escolar</p>
+        <p id="school-stage">
+          En este módulo deberá capturar los datos de los maestros de su
+          escuela. Para empezar digite la clave de la escuela y pulse continuar
+        </p>
+        <p id="teacher-stage" class="hidden">
+          En esta sección Usted podra administrar la adscripción de personal de
+          su centro de trabajo. A continuación escriba los datos que se piden y
+          pulse el botón Guardar para agregar al trabajador a la lista.
+        </p>
+      </div>
+      <form class="school">
+        <label for="cct"
+          >Clave de Centro de Trabajo
+          <input type="text" name="cct" id="cct" class="text-input" />
+        </label>
+        <button id="continue" type="button">Continuar</button>
+      </form>
+      <form class="teachers hidden">
+        <div class="input-field">
+          <label for="rfc">R.F.C. </label
+          ><input type="text" name="rfc" id="rfc" class="text-input" />
+        </div>
+        <div class="input-field">
+          <label for="paterno">Apellido Paterno </label
+          ><input type="text" name="paterno" id="paterno" class="text-input" />
+        </div>
+        <div class="input-field">
+          <label for="materno">Apellido Materno </label
+          ><input type="text" name="materno" id="materno" class="text-input" />
+        </div>
+        <div class="input-field">
+          <label for="nombre">Nombre(s) </label
+          ><input type="text" name="nombre" id="nombre" class="text-input" />
+        </div>
+        <div class="input-field">
+          <label for="funcion">Función </label
+          ><select name="funcion" id="funcion">
+            <option value="Director">Director</option>
+            <option value="Maestro(a) de Primer Grado">
+              Maestro(a) de Primer Grado
+            </option>
+            <option value="Maestro(a) de Segundo Grado">
+              Maestro(a) de Segundo Grado
+            </option>
+            <option value="Maestro(a) de Tercer Grado">
+              Maestro(a) de Tercer Grado
+            </option>
+            <option value="Maestro(a) de Cuarto Grado">
+              Maestro(a) de Cuarto Grado
+            </option>
+            <option value="Maestro(a) de Quinto Grado">
+              Maestro(a) de Quinto Grado
+            </option>
+            <option value="Maestro(a) de Sexto Grado">
+              Maestro(a) de Sexto Grado
+            </option>
+          </select>
+        </div>
+        <button type="button" id="add" class="primary">Agregar</button
+        ><button type="reset" id="cancel" class="secondary">Cancelar</button>
+      </form>
+      <section id="list">
+        <h2>PERSONAL ADSCRITO - ESCUELA: <span></span></h2>
+        <h2 class="warning"></h2>
+        <table class="responsive-table">
+          <thead>
+            <tr>
+              <th scope="col">Nombre Completo</th>
+              <th scope="col">R.F.C.</th>
+              <th scope="col">Función</th>
+              <th scope="col">Acción</th>
+            </tr>
+          </thead>
+          <tbody id="data"></tbody>
+        </table>
+      </section>
+    </main>
+    <footer class="footer"></footer>
+  </body>
   <script src="/js/script.js"></script>
 </html>
