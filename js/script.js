@@ -1,7 +1,7 @@
 let schoolInfo = {};
 let editMode = false;
 
-/* TODO: Modificar funciones de editar y eliminar dentro de showData  */
+/* TODO: Modificar funciones de editar y eliminar dentro de showInstructions  */
 let currentIndex = -1;
 
 const addButton = document.getElementById("add");
@@ -60,7 +60,7 @@ const addDeleteButton = () => {
     schoolInfo.teachers.splice(index, 1);
     localStorage.setItem("schoolInfo", JSON.stringify(schoolInfo));
     e.target.parentNode.parentNode.parentNode.removeChild(node);
-    updateWarning();
+    updateRecordInfo();
     editMode ? document.getElementById("cancel").click() : "";
   });
   return deleteButton;
@@ -121,7 +121,7 @@ const addRow = (teacherInfo) => {
   tableBody.appendChild(row);
 };
 
-const updateWarning = () => {
+const updateRecordInfo = () => {
   schoolInfo.teachers.length > 0
     ? (document.querySelector(
         ".warning"
@@ -149,13 +149,13 @@ const fillTable = () => {
   });
 };
 
-const showData = () => {
+const showInstructions = () => {
   document.querySelector(".teachers").classList.toggle("hidden");
   document.querySelector(".school").classList.toggle("hidden");
   document.getElementById("school-stage").classList.toggle("hidden");
   document.getElementById("teacher-stage").classList.toggle("hidden");
   document.querySelector("#list h2 span").innerHTML = schoolInfo.claveEscuela;
-  updateWarning();
+  updateRecordInfo();
 };
 
 window.addEventListener("load", () => {
@@ -167,7 +167,7 @@ window.addEventListener("load", () => {
       teachers: [],
     };
   } else {
-    showData();
+    showInstructions();
     fillTable();
   }
 });
@@ -178,7 +178,7 @@ document.getElementById("continue").addEventListener("click", () => {
     schoolInfo.claveEscuela = document.getElementById("cct").value;
     try {
       localStorage.setItem("schoolInfo", JSON.stringify(schoolInfo));
-      showData();
+      showInstructions();
     } catch (error) {
       console.log("Error al guardar en LocalStorage");
     }
@@ -219,7 +219,7 @@ addButton.addEventListener("click", () => {
       editMode = false;
       addButton.innerHTML = "Guardar";
     }
-    updateWarning();
+    updateRecordInfo();
     localStorage.setItem("schoolInfo", JSON.stringify(schoolInfo));
   }
 
