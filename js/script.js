@@ -1,12 +1,11 @@
 let schoolInfo = {};
 let editMode = false;
 
-/* TODO: Modificar funciones de editar y eliminar dentro de showInstructions  */
 let currentIndex = -1;
 
 const addButton = document.getElementById("add");
 
-const validateData = () => {
+const validateData = (index) => {
   let response = {
     result: true,
     message: "",
@@ -48,55 +47,40 @@ const loadData = () => {
   return (schoolInfo = localStorage.getItem("schoolInfo"));
 };
 
-const addDeleteButton = () => {
-  let deleteButton = document.createElement("button");
-  deleteButton.setAttribute("type", "button");
-  deleteButton.classList.add("delete-button");
-  deleteButton.innerHTML = "Borrar";
-  deleteButton.addEventListener("click", (e) => {
-    let node = e.target.parentNode.parentNode;
-    let rfc = node.childNodes[1].innerHTML;
-    let index = schoolInfo.teachers.findIndex((item) => item.rfc === rfc);
-    schoolInfo.teachers.splice(index, 1);
-    localStorage.setItem("schoolInfo", JSON.stringify(schoolInfo));
-    e.target.parentNode.parentNode.parentNode.removeChild(node);
-    updateRecordInfo();
-    editMode ? document.getElementById("cancel").click() : "";
-  });
-  return deleteButton;
+const deleteRow = (index) => {
+  console.log("delete");
+  document.querySelector(".responsive-table tbody").innerHTML = "";
+  schoolInfo.teachers.splice(index, 1);
+  localStorage.setItem("schoolInfo", JSON.stringify(schoolInfo));
+  fillTable();
+  updateRecordInfo();
+  editMode ? document.getElementById("cancel").click() : "";
 };
 
-const addEditButton = () => {
-  let editButton = document.createElement("button");
-  editButton.setAttribute("type", "button");
-  editButton.classList.add("primary");
-  editButton.innerHTML = "Editar";
+const editRow = (index) => {
+  editMode = true;
+  currentIndex = index;
+  addButton.innerHTML = "Editar";
+  let inputs = document.querySelectorAll(".teachers input ");
+  let data = Object.values(schoolInfo.teachers[index]);
+  for (let i = 0; i < data.length - 1; i++) {
+    inputs[i].value = data[i];
+  }
+  document.getElementById("funcion").selectedIndex = Array.from(
+    document.querySelectorAll("#funcion option")
+  ).findIndex((item) => item.value === data[data.length - 1]);
+  document.getElementById("rfc").focus();
+  document.querySelector(".teachers").classList.add("edit");
 
-  editButton.addEventListener("click", (e) => {
-    editMode = true;
-    addButton.innerHTML = "Editar";
-    let inputs = document.querySelectorAll(".teachers input ");
-    let node = e.target.parentNode.parentNode;
-    let rfc = node.childNodes[1].innerHTML;
-    let data = Object.values(
-      schoolInfo.teachers.find((item) => item.rfc === rfc)
-    );
-    currentIndex = schoolInfo.teachers.findIndex((item) => item.rfc === rfc);
-    for (let i = 0; i < data.length - 1; i++) {
-      inputs[i].value = data[i];
-    }
-    let options = Array.from(document.querySelectorAll("#funcion option"));
-    document.getElementById("funcion").selectedIndex = options.findIndex(
-      (item) => item.innerHTML === data[data.length - 1]
-    );
-    document.getElementById("rfc").focus();
-    document.querySelector(".teachers").classList.add("edit");
-  });
+  /*  for (let key in schoolInfo.teachers[index]) {
+    schoolInfo.teachers[index][key] = "";
+  } */
 
-  return editButton;
+  console.log(schoolInfo.teachers[index]);
 };
 
-const addRow = (teacherInfo) => {
+/* Add row with data */
+const addRow = (teacherInfo, index) => {
   let tableBody = document.getElementById("data");
   let row = document.createElement("tr");
   let titles = Array.from(document.querySelectorAll("th"));
@@ -105,22 +89,16 @@ const addRow = (teacherInfo) => {
   for (let i = 0; i < values.length; i++) {
     let td = null;
     if (i === 0) {
-      td = document.createElement("th");
-      td.setAttribute("scope", "row");
+      row.innerHTML = `<th scope="row" data-tittle="${titles[i].innerHTML}">${values[i]}</td>`;
     } else {
-      td = document.createElement("td");
+      row.innerHTML += `<td data-tittle="${titles[i].innerHTML}">${values[i]}</td>`;
     }
-    td.setAttribute("data-tittle", titles[i].innerHTML);
-    td.innerHTML = values[i];
-    row.appendChild(td);
   }
-  let actionTD = document.createElement("td");
-  actionTD.appendChild(addEditButton());
-  actionTD.appendChild(addDeleteButton());
-  row.appendChild(actionTD);
+  row.innerHTML += `<td><button type="button" class="primary" onclick="editRow(${index})">Editar</button><button type="button" class="delete-button" onclick="deleteRow(${index})">Borrar</button></td>`;
   tableBody.appendChild(row);
 };
 
+/* Display information about number of records  */
 const updateRecordInfo = () => {
   schoolInfo.teachers.length > 0
     ? (document.querySelector(
@@ -130,7 +108,8 @@ const updateRecordInfo = () => {
         "Aún no ha guardado ningún registro");
 };
 
-const updateRow = (index, teacherInfo) => {
+/* Update teacher info when edit button is clicked */
+const updateRow = (teacherInfo, index) => {
   let tr = document.querySelectorAll(`#data tr:nth-child(${index}) *`);
   let values = Object.values(teacherInfo);
   for (let i = 0; i < values.length; i++) {
@@ -138,17 +117,19 @@ const updateRow = (index, teacherInfo) => {
   }
 };
 
+/* Fill Table with data from Local Storage */
 const fillTable = () => {
-  schoolInfo.teachers.forEach((teacher) => {
+  schoolInfo.teachers.forEach((teacher, index) => {
     let teacherDisplayInfo = {
       fullname: `${teacher.paterno} ${teacher.materno} ${teacher.nombre}`,
       rfc: teacher.rfc,
       funcion: teacher.funcion,
     };
-    addRow(teacherDisplayInfo);
+    addRow(teacherDisplayInfo, index);
   });
 };
 
+/* Toggle 'hidden' class depending on input data flow.Info display*/
 const showInstructions = () => {
   document.querySelector(".teachers").classList.toggle("hidden");
   document.querySelector(".school").classList.toggle("hidden");
@@ -158,6 +139,7 @@ const showInstructions = () => {
   updateRecordInfo();
 };
 
+/* Get data from Local Storage */
 window.addEventListener("load", () => {
   console.log("ready");
   schoolInfo = JSON.parse(loadData());
@@ -172,7 +154,7 @@ window.addEventListener("load", () => {
   }
 });
 
-/* Botón continuar */
+/* Continue Button Event Listener */
 document.getElementById("continue").addEventListener("click", () => {
   if (document.getElementById("cct").value !== "") {
     schoolInfo.claveEscuela = document.getElementById("cct").value;
@@ -185,12 +167,12 @@ document.getElementById("continue").addEventListener("click", () => {
   }
 });
 
+/* Save Button Event Listener */
 addButton.addEventListener("click", () => {
   let rfc = document.getElementById("rfc").value;
   let paterno = document.getElementById("paterno").value;
   let materno = document.getElementById("materno").value;
   let nombre = document.getElementById("nombre").value;
-
   let funcion = document.getElementById("funcion").value;
 
   if (validateData().result) {
@@ -210,22 +192,22 @@ addButton.addEventListener("click", () => {
 
     if (!editMode) {
       schoolInfo.teachers.push(teacherInfo);
-      addRow(teacherDisplayInfo);
+      addRow(teacherDisplayInfo, schoolInfo.teachers.length - 1);
     } else {
       schoolInfo.teachers[currentIndex] = JSON.parse(
         JSON.stringify(teacherInfo)
       );
-      updateRow(currentIndex + 1, teacherDisplayInfo);
+      updateRow(teacherDisplayInfo, currentIndex + 1);
       editMode = false;
       addButton.innerHTML = "Guardar";
     }
-    updateRecordInfo();
     localStorage.setItem("schoolInfo", JSON.stringify(schoolInfo));
+    updateRecordInfo();
   }
-
   document.getElementById("cancel").click();
 });
 
+/* Cancel Button Event Listener */
 document.getElementById("cancel").addEventListener("click", () => {
   document.getElementById("rfc").focus();
   addButton.innerHTML = "Guardar";
