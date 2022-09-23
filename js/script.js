@@ -1,13 +1,10 @@
 let schoolInfo = {};
-let schoolForm = document.querySelector(".school");
-let teachersForm = document.querySelector(".teachers");
-let schoolInstructions = document.getElementById("school-stage");
-let teacherInstructions = document.getElementById("teacher-stage");
 let editMode = false;
+
+/* TODO: Modificar funciones de editar y eliminar dentro de showData  */
 let currentIndex = -1;
-const continueButton = document.getElementById("continue");
+
 const addButton = document.getElementById("add");
-const cancelButton = document.getElementById("cancel");
 
 const validateData = () => {
   let response = {
@@ -153,10 +150,10 @@ const fillTable = () => {
 };
 
 const showData = () => {
-  teachersForm.classList.toggle("hidden");
-  schoolForm.classList.toggle("hidden");
-  schoolInstructions.classList.toggle("hidden");
-  teacherInstructions.classList.toggle("hidden");
+  document.querySelector(".teachers").classList.toggle("hidden");
+  document.querySelector(".school").classList.toggle("hidden");
+  document.getElementById("school-stage").classList.toggle("hidden");
+  document.getElementById("teacher-stage").classList.toggle("hidden");
   document.querySelector("#list h2 span").innerHTML = schoolInfo.claveEscuela;
   updateWarning();
 };
@@ -175,7 +172,8 @@ window.addEventListener("load", () => {
   }
 });
 
-continueButton.addEventListener("click", () => {
+/* Botón continuar */
+document.getElementById("continue").addEventListener("click", () => {
   if (document.getElementById("cct").value !== "") {
     schoolInfo.claveEscuela = document.getElementById("cct").value;
     try {
@@ -194,7 +192,6 @@ addButton.addEventListener("click", () => {
   let nombre = document.getElementById("nombre").value;
 
   let funcion = document.getElementById("funcion").value;
-  /*   let funcion = functionSelect.options[functionSelect.selectedIndex].text; */
 
   if (validateData().result) {
     let teacherInfo = {
@@ -229,7 +226,7 @@ addButton.addEventListener("click", () => {
   document.getElementById("cancel").click();
 });
 
-cancelButton.addEventListener("click", () => {
+document.getElementById("cancel").addEventListener("click", () => {
   document.getElementById("rfc").focus();
   addButton.innerHTML = "Guardar";
   if (editMode) {
