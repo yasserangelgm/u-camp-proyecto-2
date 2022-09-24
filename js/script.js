@@ -115,10 +115,14 @@ const updateRecordInfo = () => {
       ".warning"
     ).innerHTML = `Se han encontrado ${schoolInfo.teachers.length} registros`;
     document.querySelector(".responsive-table").classList.remove("hidden");
+    document.querySelector(".warning").classList.remove("hidden");
+    document.querySelector("#list h2").classList.remove("hidden");
   } else {
     document.querySelector(".warning").innerHTML =
       "Aún no ha guardado ningún registro";
     document.querySelector(".responsive-table").classList.add("hidden");
+    document.querySelector(".warning").classList.add("hidden");
+    document.querySelector("#list h2").classList.add("hidden");
   }
 };
 
