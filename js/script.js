@@ -110,12 +110,16 @@ const addRow = (teacherInfo, index) => {
 
 /* Display information about number of records  */
 const updateRecordInfo = () => {
-  schoolInfo.teachers.length > 0
-    ? (document.querySelector(
-        ".warning"
-      ).innerHTML = `Se han encontrado ${schoolInfo.teachers.length} registros`)
-    : (document.querySelector(".warning").innerHTML =
-        "Aún no ha guardado ningún registro");
+  if (schoolInfo.teachers.length > 0) {
+    document.querySelector(
+      ".warning"
+    ).innerHTML = `Se han encontrado ${schoolInfo.teachers.length} registros`;
+    document.querySelector(".responsive-table").classList.remove("hidden");
+  } else {
+    document.querySelector(".warning").innerHTML =
+      "Aún no ha guardado ningún registro";
+    document.querySelector(".responsive-table").classList.add("hidden");
+  }
 };
 
 /* Display information about validation */
