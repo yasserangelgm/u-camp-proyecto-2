@@ -17,29 +17,41 @@ const validateData = (index) => {
     },
     document.querySelectorAll(".teachers input")[0].value !== ""
   );
+
   if (!filledInputs) {
     response.result = false;
     response.message = "Todos los campos son obligatorios";
-  } else if (
-    schoolInfo.teachers.find(
-      (item) => item.rfc === document.getElementById("rfc").value
-    ) &&
-    !editMode
-  ) {
+    return response;
+  }
+
+  let findIndex = schoolInfo.teachers.findIndex(
+    (item) => item.rfc === document.getElementById("rfc").value
+  );
+
+  if (index === findIndex) {
+    response.result = true;
+    response.message = "El registro se guardó con éxito";
+  } else if (findIndex !== -1) {
     response.result = false;
-    response.message = "El RFC ya se encuentra registrado";
+    response.message = "El RFC ya está registrado";
+    return response;
+  }
+
+  findIndex = schoolInfo.teachers.findIndex(
+    (item) => item.funcion === "Director"
+  );
+
+  if (index === findIndex) {
+    response.result = true;
+    response.message = "El registro se guardó con éxito";
   } else if (
-    schoolInfo.teachers.find(
-      (item) =>
-        item.funcion === document.getElementById("funcion").options.value
-    ) &&
-    schoolInfo.teachers.length > 0 &&
-    document.getElementById("funcion").options.value === "Director"
+    findIndex !== -1 &&
+    document.getElementById("funcion").value === "Director"
   ) {
     response.result = false;
     response.message = "Ya existe una persona con función de Director";
+    return response;
   }
-  console.log(response);
   return response;
 };
 
@@ -48,12 +60,15 @@ const loadData = () => {
 };
 
 const deleteRow = (index) => {
-  console.log("delete");
   document.querySelector(".responsive-table tbody").innerHTML = "";
   schoolInfo.teachers.splice(index, 1);
   localStorage.setItem("schoolInfo", JSON.stringify(schoolInfo));
   fillTable();
   updateRecordInfo();
+  showValidationInfo({
+    result: true,
+    message: "El registro se eliminó con éxito",
+  });
   editMode ? document.getElementById("cancel").click() : "";
 };
 
@@ -71,12 +86,6 @@ const editRow = (index) => {
   ).findIndex((item) => item.value === data[data.length - 1]);
   document.getElementById("rfc").focus();
   document.querySelector(".teachers").classList.add("edit");
-
-  /*  for (let key in schoolInfo.teachers[index]) {
-    schoolInfo.teachers[index][key] = "";
-  } */
-
-  console.log(schoolInfo.teachers[index]);
 };
 
 /* Add row with data */
@@ -94,7 +103,8 @@ const addRow = (teacherInfo, index) => {
       row.innerHTML += `<td data-tittle="${titles[i].innerHTML}">${values[i]}</td>`;
     }
   }
-  row.innerHTML += `<td><button type="button" class="primary" onclick="editRow(${index})">Editar</button><button type="button" class="delete-button" onclick="deleteRow(${index})">Borrar</button></td>`;
+  row.innerHTML += `<td><button type="button" class="primary" onclick="editRow(${index})">Editar</button>
+                    <button type="button" class="delete-button" onclick="deleteRow(${index})">Borrar</button></td>`;
   tableBody.appendChild(row);
 };
 
@@ -106,6 +116,21 @@ const updateRecordInfo = () => {
       ).innerHTML = `Se han encontrado ${schoolInfo.teachers.length} registros`)
     : (document.querySelector(".warning").innerHTML =
         "Aún no ha guardado ningún registro");
+};
+
+/* Display information about validation */
+const showValidationInfo = (responseValidation) => {
+  document.getElementById(
+    "validate-info"
+  ).innerHTML = `${responseValidation.message}`;
+  responseValidation.result
+    ? document.getElementById("validate-info").classList.add("success")
+    : document.getElementById("validate-info").classList.add("active");
+  setTimeout(() => {
+    document.getElementById("validate-info").innerHTML = "";
+    document.getElementById("validate-info").classList.remove("active");
+    document.getElementById("validate-info").classList.remove("success");
+  }, 3000);
 };
 
 /* Update teacher info when edit button is clicked */
@@ -175,7 +200,9 @@ addButton.addEventListener("click", () => {
   let nombre = document.getElementById("nombre").value;
   let funcion = document.getElementById("funcion").value;
 
-  if (validateData().result) {
+  let responseValidation = validateData(currentIndex);
+
+  if (responseValidation.result) {
     let teacherInfo = {
       rfc: rfc,
       paterno: paterno,
@@ -199,11 +226,13 @@ addButton.addEventListener("click", () => {
       );
       updateRow(teacherDisplayInfo, currentIndex + 1);
       editMode = false;
+      currentIndex = -1;
       addButton.innerHTML = "Guardar";
     }
     localStorage.setItem("schoolInfo", JSON.stringify(schoolInfo));
     updateRecordInfo();
   }
+  showValidationInfo(responseValidation);
   document.getElementById("cancel").click();
 });
 

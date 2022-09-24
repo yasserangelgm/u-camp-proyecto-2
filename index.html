@@ -36,7 +36,7 @@
           >Clave de Centro de Trabajo
           <input type="text" name="cct" id="cct" class="text-input" />
         </label>
-        <button id="continue" type="button">Continuar</button>
+        <button id="continue" type="button" class="primary">Continuar</button>
       </form>
       <form class="teachers hidden">
         <div class="input-field">
@@ -81,6 +81,7 @@
         </div>
         <button type="button" id="add" class="primary">Agregar</button
         ><button type="reset" id="cancel" class="secondary">Cancelar</button>
+        <span id="validate-info"></span>
       </form>
       <section id="list">
         <h2>PERSONAL ADSCRITO - ESCUELA: <span></span></h2>
@@ -98,7 +99,10 @@
         </table>
       </section>
     </main>
-    <footer class="footer"></footer>
+    <footer class="footer">
+      <p>Secretaría de Educación</p>
+      <p>Todos los derechos reservados &copy;</p>
+    </footer>
   </body>
   <script src="/js/script.js"></script>
 </html>
